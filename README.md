@@ -22,4 +22,10 @@ Than run the script, with an argument which is an ip address on which you are ru
 2. In security group, allow TCP port 5000.
 3. Launch the instance.
 4. Log into your instance.
-5. 
+5. Clone this repo:
+
+```git clone https://github.com/HarithJ/Yummy-Recipes-Script/edit/master/README.md```
+
+6. Than run the script, with an argument which is an ip address on which you are running the app on or domain name:
+
+```source webapp.sh [ip address/domain name]```
