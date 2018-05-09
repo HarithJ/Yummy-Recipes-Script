@@ -6,13 +6,13 @@ setup () {
 
   sudo add-apt-repository ppa:deadsnakes/ppa
   sudo apt-get update
-  sudo apt-get install python3.6
-  sudo apt-get install build-essential python3.6-dev nginx
+  yes | sudo apt-get install python3.6
+  yes | sudo apt-get install build-essential python3.6-dev nginx
 
   wget https://bootstrap.pypa.io/get-pip.py
-  sudo python3.6 get-pip.py
+  yes | sudo python3.6 get-pip.py
 
-  sudo apt install python3.6-venv
+  yes | sudo apt install python3.6-venv
 }
 
 scriptDir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
