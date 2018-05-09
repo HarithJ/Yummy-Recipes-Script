@@ -31,9 +31,9 @@ sudo cp $scriptDir/yummy-recipes.service /etc/systemd/system/
 sudo systemctl start yummy-recipes
 sudo systemctl enable yummy-recipes
 
-sudo cp $scriptDir/yummy-recipes $PWD
-sudo ln -s $PWD/yummy-recipes /etc/nginx/sites-enabled
-
+sudo cp $scriptDir/yummy-recipes /etc/nginx/sites-available/
+sudo ln -s /etc/nginx/sites-available/yummy-recipes /etc/nginx/sites-enabled
+sudo nginx -t
 sudo systemctl restart nginx
 
 sudo ufw allow 'Nginx Full'
