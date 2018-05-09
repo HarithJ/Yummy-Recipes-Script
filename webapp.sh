@@ -10,6 +10,9 @@ sudo python3.6 get-pip.py
 
 sudo apt install python3.6-venv
 
+scriptDir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+cd $HOME
 mkdir Yummy-Recipes
 cd Yummy-Recipes
 
@@ -22,4 +25,6 @@ pip install -r requirements.txt
 
 pip install uwsgi
 
-uwsgi --socket 0.0.0.0:5000 --wsgi-file run.py --callable app --processes 4 --threads 2
+cp scriptDir/uwsgi.ini $PWD
+
+uwsgi --http 0.0.0.0:5000 --wsgi-file run.py --callable app --processes 4 --threads 2
