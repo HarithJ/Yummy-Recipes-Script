@@ -15,3 +15,11 @@ And cd into the folder:
 Than run the script, with an argument which is an ip address on which you are running the app on or domain name:
 
 ```source webapp.sh [ip address/domain name]```
+
+
+### Running it on AWS
+1. Create an EC2 instance, with AMI as `Ubuntu Server 16.04`.
+2. In security group, allow TCP port 5000.
+3. Launch the instance.
+4. Log into your instance.
+5. 
