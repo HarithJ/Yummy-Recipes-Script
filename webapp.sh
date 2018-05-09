@@ -49,6 +49,7 @@ setupNginxServer () {
   printf '=================================== Setting up Nginx server ============================================ \n'
 
   createNginxSettingFile ${1}
+  sudo cp $scriptDir/yummy-recipes /etc/nginx/sites-available/
   sudo ln -s /etc/nginx/sites-available/yummy-recipes /etc/nginx/sites-enabled
   sudo nginx -t
   sudo systemctl restart nginx
@@ -57,7 +58,7 @@ setupNginxServer () {
 }
 
 createNginxSettingFile () {
-  sudo bash -c 'cat > /etc/nginx/sites-available/yummy-recipes <<EOF
+  cat > $scriptDir/yummy-recipes <<EOF
 server {
     listen 80;
     server_name ${1};
@@ -67,7 +68,7 @@ server {
         uwsgi_pass unix:/home/ubuntu/Yummy-Recipes/Yummy-Recipes-Ch3/yummy-recipes.sock;
     }
 }
-EOF'
+EOF
 }
 
 run () {
