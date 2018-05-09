@@ -56,6 +56,20 @@ setupNginxServer () {
   sudo ufw allow 'Nginx Full'
 }
 
+createNginxSettingFile () {
+  cat > $scriptDir/yummy-recipes <<EOL
+  server {
+      listen 80;
+      server_name ${1};
+
+      location / {
+          include uwsgi_params;
+          uwsgi_pass unix:/home/ubuntu/Yummy-Recipes/Yummy-Recipes-Ch3/yummy-recipes.sock;
+      }
+  }
+  EOL
+}
+
 run () {
   setup
   project
