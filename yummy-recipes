@@ -1,0 +1,9 @@
+server {
+    listen 80;
+    server_name 18.218.116.138;
+
+    location / {
+        include uwsgi_params;
+        uwsgi_pass unix:/home/ubuntu/Yummy-Recipes/Yummy-Recipes-Cp3/yummy-recipes.sock;
+    }
+}

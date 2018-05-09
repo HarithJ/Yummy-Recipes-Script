@@ -26,5 +26,14 @@ pip install -r requirements.txt
 pip install uwsgi
 
 cp $scriptDir/uwsgi.ini $PWD
+sudo cp $scriptDir/yummy-recipes.service /etc/systemd/system/
 
-uwsgi --http 0.0.0.0:5000 --wsgi-file run.py --callable app --processes 4 --threads 2
+sudo systemctl start yummy-recipes
+sudo systemctl enable yummy-recipes
+
+sudo cp yummy-recipes /etc/nginx/sites-available/
+sudo ln -s /etc/nginx/sites-available/yummy-recipes /etc/nginx/sites-enabled
+
+sudo systemctl restart nginx
+
+sudo ufw allow 'Nginx Full'
