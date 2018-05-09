@@ -1,39 +1,66 @@
 #!/bin/bash
 
-sudo add-apt-repository ppa:deadsnakes/ppa
-sudo apt-get update
-sudo apt-get install python3.6
-sudo apt-get install build-essential python3.6-dev nginx
+# setup the environment for Yummy recipes
+setup () {
+  printf '=================================== Setting up the environment ============================================ \n'
 
-wget https://bootstrap.pypa.io/get-pip.py
-sudo python3.6 get-pip.py
+  sudo add-apt-repository ppa:deadsnakes/ppa
+  sudo apt-get update
+  sudo apt-get install python3.6
+  sudo apt-get install build-essential python3.6-dev nginx
 
-sudo apt install python3.6-venv
+  wget https://bootstrap.pypa.io/get-pip.py
+  sudo python3.6 get-pip.py
+
+  sudo apt install python3.6-venv
+}
 
 scriptDir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-cd $HOME
-mkdir Yummy-Recipes
-cd Yummy-Recipes
+# Get the project and set it up
+project () {
+  printf '=================================== Setting up the Project ============================================ \n'
 
-python3.6 -m venv venv
-git clone https://github.com/HarithJ/Yummy-Recipes-Ch3.git
-source venv/bin/activate
-cd Yummy-Recipes-Ch3
+  cd $HOME
+  mkdir Yummy-Recipes
+  cd Yummy-Recipes
 
-pip install -r requirements.txt
+  python3.6 -m venv venv
+  git clone https://github.com/HarithJ/Yummy-Recipes-Ch3.git
+  source venv/bin/activate
+  cd Yummy-Recipes-Ch3
 
-pip install uwsgi
+  pip install -r requirements.txt
+}
 
-cp $scriptDir/uwsgi.ini $PWD
-sudo cp $scriptDir/yummy-recipes.service /etc/systemd/system/
+setupUwsgiServer () {
+  printf '=================================== Setting up uwsgi server ============================================ \n'
 
-sudo systemctl start yummy-recipes
-sudo systemctl enable yummy-recipes
+  pip install uwsgi
 
-sudo cp $scriptDir/yummy-recipes /etc/nginx/sites-available/
-sudo ln -s /etc/nginx/sites-available/yummy-recipes /etc/nginx/sites-enabled
-sudo nginx -t
-sudo systemctl restart nginx
+  cp $scriptDir/uwsgi.ini $PWD
+  sudo cp $scriptDir/yummy-recipes.service /etc/systemd/system/
 
-sudo ufw allow 'Nginx Full'
+  sudo systemctl start yummy-recipes
+  sudo systemctl enable yummy-recipes
+}
+
+setupNginxServer () {
+  printf '=================================== Setting up Nginx server ============================================ \n'
+
+  sudo cp $scriptDir/yummy-recipes /etc/nginx/sites-available/
+  sudo ln -s /etc/nginx/sites-available/yummy-recipes /etc/nginx/sites-enabled
+  sudo nginx -t
+  sudo systemctl restart nginx
+
+  sudo ufw allow 'Nginx Full'
+}
+
+run () {
+  setup
+  project
+  setupUwsgiServer
+  setupNginxServer
+}
+
+run
