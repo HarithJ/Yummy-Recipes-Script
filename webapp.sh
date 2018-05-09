@@ -57,16 +57,16 @@ setupNginxServer () {
 }
 
 createNginxSettingFile () {
-  sudo cat <<EOF > $scriptDir/yummy-recipess
-  server {
-      listen 80;
-      server_name ${1};
+  sudo cat > $scriptDir/yummy-recipes <<EOF
+server {
+    listen 80;
+    server_name ${1};
 
-      location / {
-          include uwsgi_params;
-          uwsgi_pass unix:/home/ubuntu/Yummy-Recipes/Yummy-Recipes-Ch3/yummy-recipes.sock;
-      }
-  }
+    location / {
+        include uwsgi_params;
+        uwsgi_pass unix:/home/ubuntu/Yummy-Recipes/Yummy-Recipes-Ch3/yummy-recipes.sock;
+    }
+}
 EOF
 }
 
