@@ -12,6 +12,6 @@ And cd into the folder:
 
 ```cd Yummy-Recipes-Script```
 
-Than run the script, with an argument which is ip address on which you are running the app on or domain name:
+Than run the script, with an argument which is an ip address on which you are running the app on or domain name:
 
-```source webapp.sh```
+```source webapp.sh [ip address/domain name]```
