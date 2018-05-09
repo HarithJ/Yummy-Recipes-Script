@@ -25,6 +25,6 @@ pip install -r requirements.txt
 
 pip install uwsgi
 
-cp scriptDir/uwsgi.ini $PWD
+cp $scriptDir/uwsgi.ini $PWD
 
 uwsgi --http 0.0.0.0:5000 --wsgi-file run.py --callable app --processes 4 --threads 2
