@@ -39,6 +39,7 @@ setupUwsgiServer () {
   pip install uwsgi
 
   cp $scriptDir/uwsgi.ini $PWD
+  createServiceFile
   sudo cp $scriptDir/yummy-recipes.service /etc/systemd/system/
 
   sudo systemctl start yummy-recipes
@@ -57,6 +58,7 @@ setupNginxServer () {
   sudo ufw allow 'Nginx Full'
 }
 
+# Create Nginx settings file that will connect to the app
 createNginxSettingFile () {
   cat > $scriptDir/yummy-recipes <<EOF
 server {
@@ -68,6 +70,25 @@ server {
         uwsgi_pass unix:/home/ubuntu/Yummy-Recipes/Yummy-Recipes-Ch3/yummy-recipes.sock;
     }
 }
+EOF
+}
+
+#Create service file that will allow uwsgi to run in background
+createServiceFile () {
+  cat > $scriptDir/yummy-recipes.service <<EOF
+[Unit]
+Description=uWSGI instance to serve Yummy-Recipes
+After=network.target
+
+[Service]
+User=ubuntu
+Group=www-data
+WorkingDirectory=${HOME}/Yummy-Recipes/Yummy-Recipes-Ch3
+Environment="PATH=${HOME}/Yummy-Recipes/venv/bin"
+ExecStart=${HOME}/Yummy-Recipes/venv/bin/uwsgi --ini uwsgi.ini
+
+[Install]
+WantedBy=multi-user.target
 EOF
 }
 
