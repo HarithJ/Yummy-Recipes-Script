@@ -67,7 +67,7 @@ createNginxSettingFile () {
           uwsgi_pass unix:/home/ubuntu/Yummy-Recipes/Yummy-Recipes-Ch3/yummy-recipes.sock;
       }
   }
-  EOF
+EOF
 }
 
 run () {
