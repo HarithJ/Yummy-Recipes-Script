@@ -67,7 +67,7 @@ server {
 
     location / {
         include uwsgi_params;
-        uwsgi_pass unix:/home/ubuntu/Yummy-Recipes/Yummy-Recipes-Ch3/yummy-recipes.sock;
+        uwsgi_pass unix:/tmp/yummy-recipes.sock;
     }
 }
 EOF
